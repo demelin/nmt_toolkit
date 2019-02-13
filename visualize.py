@@ -30,12 +30,7 @@ def get_args():
 
 def main(args):
     """ Main function. Visualizes attention weight arrays as nifty heat-maps. """
-
-    # Note: To generate attention heat-maps annotated with Japanese characters, either install the 'TakaoGothic' font
-    # on your machine or replace 'TakaoGothic' in the expression below with a different font supporting Japanese
-    # characters
-
-    mpl.rc('font', family='TakaoGothic')
+    mpl.rc('font', family='VL Gothic')
 
     torch.manual_seed(42)
     state_dict = torch.load(args.checkpoint_path, map_location=lambda s, l: default_restore_location(s, 'cpu'))
