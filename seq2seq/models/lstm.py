@@ -263,8 +263,8 @@ class LSTMDecoder(Seq2SeqDecoder):
         if cached_state is not None:
             tgt_hidden_states, tgt_cell_states, input_feed = cached_state
         else:
-            tgt_hidden_states = [src_hidden_states[i] for i in range(len(self.layers))]
-            tgt_cell_states = [src_cell_states[i] for i in range(len(self.layers))]
+            tgt_hidden_states = [torch.zeros(tgt_inputs.size()[0], self.hidden_size) for i in range(len(self.layers))]
+            tgt_cell_states = [torch.zeros(tgt_inputs.size()[0], self.hidden_size) for i in range(len(self.layers))]
             input_feed = tgt_embeddings.data.new(batch_size, self.hidden_size).zero_()
         '''___QUESTION-1-DESCRIBE-D-END___'''
 
