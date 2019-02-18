@@ -152,6 +152,7 @@ class AttentionLayer(nn.Module):
         super().__init__()
         # Scoring method is 'general'
         self.src_projection = nn.Linear(input_dims, output_dims, bias=False)
+        self.context_plus_hidden_projection = nn.Linear(input_dims + output_dims, output_dims, bias=False)
 
     def forward(self, tgt_input, encoder_out, src_mask):
         # tgt_input has shape = [batch_size, input_dims]
@@ -171,9 +172,11 @@ class AttentionLayer(nn.Module):
             attn_scores.masked_fill_(src_mask, float('-inf'))
         attn_weights = F.softmax(attn_scores, dim=-1)
         attn_context = torch.bmm(attn_weights, encoder_out).squeeze(dim=1)
+        context_plus_hidden = torch.cat([tgt_input, attn_context], dim=1)
+        attn_out = torch.tanh(self.context_plus_hidden_projection(context_plus_hidden))
         '''___QUESTION-1-DESCRIBE-B-END___'''
 
-        return attn_context, attn_weights.squeeze(dim=1)
+        return attn_out, attn_weights.squeeze(dim=1)
 
     def score(self, tgt_input, encoder_out):
         """ Computes attention scores. """
