@@ -65,6 +65,11 @@ def main(args):
 
     # Iterate over the visualization set
     for i, sample in enumerate(vis_loader):
+        
+        # Only visualize the first 10 sentence pairs
+        if i >= 10:
+            break
+        
         if args.cuda:
             sample = utils.move_to_cuda(sample)
         if len(sample) == 0:
@@ -73,10 +78,6 @@ def main(args):
         # Perform forward pass
         output, attn_weights = model(sample['src_tokens'], sample['src_lengths'], sample['tgt_inputs'])
         attn_records.append((sample, attn_weights))
-
-        # Only visualize the first 10 sentence pairs
-        if i >= 10:
-            break
 
     # Generate heat-maps and store them at the designated location
     if not os.path.exists(args.vis_dir):
