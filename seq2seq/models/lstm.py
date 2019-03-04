@@ -293,7 +293,7 @@ class LSTMDecoder(Seq2SeqDecoder):
 
             '''
             ___QUESTION-1-DESCRIBE-E-START___
-            How is attention integrated into the decoder? Why is the attention function given the previous 
+            How is attention integrated into the decoder? Why is the attention function given the current 
             target state as one of its inputs? What is the purpose of the dropout layer?
             '''
             if self.attention is None:
