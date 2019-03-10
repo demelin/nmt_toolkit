@@ -42,6 +42,6 @@ def register_model_architecture(model_name, arch_name):
 
 # Automatically import any Python files in the models/ directory
 for file in os.listdir(os.path.dirname(__file__)):
-    if file.endswith('.py') and not file.startswith('_'):
+    if file.endswith('.py') and not (file.startswith('_') or file.startswith('.')):
         module = file[:file.find('.py')]
         importlib.import_module('seq2seq.models.' + module)
